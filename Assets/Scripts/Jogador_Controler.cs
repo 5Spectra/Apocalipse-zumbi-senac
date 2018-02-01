@@ -6,6 +6,10 @@ public class Jogador_Controler : MonoBehaviour {
 
 	public float velocidade = 10;
 	Vector3 direcao;
+	public LayerMask MascaraChao;
+
+	public bool Vivo;
+	public GameObject TextoGameOver;
 
 	void Update () {
 		float eixoX = Input.GetAxis ("Horizontal");
@@ -27,5 +31,18 @@ public class Jogador_Controler : MonoBehaviour {
 		
 		Rigidbody movimente = GetComponent<Rigidbody>();
 		movimente.MovePosition (movimente.position + (direcao * velocidade * Time.deltaTime));
+
+		Ray raio = Camera.main.ScreenPointToRay (Input.mousePosition);
+		Debug.DrawRay (raio.origin, raio.direction * 100, Color.red);
+
+		RaycastHit impacto;
+
+		if (Physics.Raycast (raio, out impacto, 100, MascaraChao)) {
+			Vector3 posicaoMiraJogador = impacto.point - transform.position;
+			posicaoMiraJogador.y = transform.position.y;
+			Quaternion novaRotacao = Quaternion.LookRotation (posicaoMiraJogador);
+			GetComponent<Rigidbody> ().MoveRotation (novaRotacao);		
+		}
+
 	}
 }
