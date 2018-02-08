@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Jogador_Controler : MonoBehaviour {
 
@@ -10,6 +11,11 @@ public class Jogador_Controler : MonoBehaviour {
 
 	public bool Vivo;
 	public GameObject TextoGameOver;
+
+	void Start(){
+		TextoGameOver.SetActive (false);
+		Time.timeScale = 1;
+	}
 
 	void Update () {
 		float eixoX = Input.GetAxis ("Horizontal");
@@ -23,6 +29,12 @@ public class Jogador_Controler : MonoBehaviour {
 		}
 		else{
 			GetComponent<Animator> ().SetBool ("Movendo", false);
+		}
+
+		if (Vivo == false) {
+			if (Input.GetButtonDown ("Fire1")) {
+				SceneManager.LoadScene ("main");
+			}
 		}
 
 	}

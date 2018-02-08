@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class Controla_Inimigo : MonoBehaviour {
 
-	public GameObject jogador;
+	GameObject jogador;
 	public float velocidade = 5;
 
 	void Start () {
+
+		jogador = GameObject.FindWithTag ("Player");
+
 		velocidade = Random.Range(3,7);
+
+		int TipoZumbi = Random.Range (1, 28);
+
+		transform.GetChild (TipoZumbi).gameObject.SetActive(true);
 	}
 
 
